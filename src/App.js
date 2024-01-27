@@ -9,7 +9,7 @@ const average = (arr) =>
 
 const KEY = "794b573f";
 export default function App() {
-	const [query, setQuery] = useState("interstellar");
+	const [query, setQuery] = useState("");
 	const [selectedId, setSelectedId] = useState(null);
 	const { movies, isLoading, error } = useMovies(query);
 
