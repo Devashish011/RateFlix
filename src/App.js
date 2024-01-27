@@ -7,7 +7,6 @@ import { useKey } from "./useKey";
 const average = (arr) =>
 	arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const KEY = "794b573f";
 export default function App() {
 	const [query, setQuery] = useState("");
 	const [selectedId, setSelectedId] = useState(null);
@@ -213,10 +212,26 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
 	useKey("Escape", onCloseMovie);
 	useEffect(
 		function () {
+			function callback(e) {
+				if (e.code === "Escape") {
+					onCloseMovie();
+				}
+			}
+
+			document.addEventListener("keydown", callback);
+
+			return function () {
+				document.removeEventListener("keydown", callback);
+			};
+		},
+		[onCloseMovie]
+	);
+	useEffect(
+		function () {
 			async function getMovieDetails() {
 				setIsLoading(true);
 				const res = await fetch(
-					`http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+					`http://www.omdbapi.com/?apikey=794b573f&i=${selectedId}`
 				);
 				const data = await res.json();
 				setMovie(data);
